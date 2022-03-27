@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/scratch/seoj4/installations')
 import os
 import cv2
 import numpy as np
