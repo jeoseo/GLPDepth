@@ -15,11 +15,15 @@ class nyudepthv2(BaseDataset):
 
         self.image_path_list = []
         self.depth_path_list = []
+
         self.data_path=data_path
+        
         if is_train:
             filenames_path += '/train_subset.txt'
         else:
             filenames_path += '/test_subset.txt'
+            #self.data_path = self.data_path + '/official_splits/test/'
+
 
         self.filenames_list = self.readTXT(filenames_path)
         phase = 'train' if is_train else 'test'

@@ -53,12 +53,12 @@ def main():
 
     print("\n2. Define Dataloader")
     if args.dataset == 'imagepath': # not for do_evaluate in case of imagepath
-        dataset_kwargs = {'dataset_name': 'ImagePath', 'data_path': args.data_path}
+        dataset_kwargs = {'dataset_name': 'ImagePath', 'data_path': args.data_path,'filenames_path':args.filenames_path}
     else:
-        dataset_kwargs = {'data_path': args.data_path, 'dataset_name': args.dataset,
+        dataset_kwargs = {'data_path': args.data_path, 'dataset_name': args.dataset,'filenames_path':args.filenames_path,
                           'is_train': False}
 
-    test_dataset = get_dataset(**dataset_kwargs)
+    test_dataset = get_dataset(**dataset_kwargs,scale_size=(224,288),)
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False,
                              pin_memory=True)
 
