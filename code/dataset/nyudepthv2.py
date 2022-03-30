@@ -42,8 +42,8 @@ class nyudepthv2(BaseDataset):
         depth = cv2.imread(gt_path, cv2.IMREAD_UNCHANGED).astype('float32')
 
         if self.scale_size:
-            image = cv2.resize(image, (self.scale_size[0], self.scale_size[1]))
-            depth = cv2.resize(depth, (self.scale_size[0], self.scale_size[1]))
+            image = cv2.resize(image, (self.scale_size[1], self.scale_size[0]))
+            depth = cv2.resize(depth, (self.scale_size[1], self.scale_size[0]))
 
         if self.is_train:
             image, depth = self.augment_training_data(image, depth)

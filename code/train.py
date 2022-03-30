@@ -54,14 +54,14 @@ def main():
     # Dataset setting
     dataset_kwargs = {'dataset_name': args.dataset, 'data_path': args.data_path}
     if args.dataset == 'nyudepthv2':
-        dataset_kwargs['crop_size'] = (448, 576)
+        dataset_kwargs['crop_size'] = (224,288)
     elif args.dataset == 'kitti':
         dataset_kwargs['crop_size'] = (352, 704)
     else:
         dataset_kwargs['crop_size'] = (args.crop_h, args.crop_w)
 
-    train_dataset = get_dataset(**dataset_kwargs)
-    val_dataset = get_dataset(**dataset_kwargs, is_train=False)
+    train_dataset = get_dataset(**dataset_kwargs,scale_size=(224,288))
+    val_dataset = get_dataset(**dataset_kwargs, is_train=False,scale_size=(224,288))
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size,
                                                shuffle=True, num_workers=args.workers, 
