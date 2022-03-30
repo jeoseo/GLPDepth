@@ -12,12 +12,10 @@ class nyudepthv2(BaseDataset):
         self.scale_size = scale_size
 
         self.is_train = is_train
-        self.data_path = os.path.join(data_path, 'nyu_depth_v2')
 
         self.image_path_list = []
         self.depth_path_list = []
 
-        txt_path = os.path.join(filenames_path, 'nyudepthv2')
         if is_train:
             txt_path += '/train_subset.txt'
         else:
