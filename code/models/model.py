@@ -11,7 +11,7 @@ class GLPDepth(nn.Module):
 
         self.encoder = mit_b4()
         if is_train:            
-            ckpt_path = './code/models/weights/mit_b4.pth'
+            ckpt_path = './GLPDepth/code/models/weights/mit_b4.pth'
             try:
                 load_checkpoint(self.encoder, ckpt_path, logger=None)
             except:
@@ -19,7 +19,7 @@ class GLPDepth(nn.Module):
                 print("Download pre-trained encoder weights...")
                 id = '1BUtU42moYrOFbsMCE-LTTkUE-mrWnfG2'
                 url = 'https://drive.google.com/uc?id=' + id
-                output = './code/models/weights/mit_b4.pth'
+                output = './GLPDepth/code/models/weights/mit_b4.pth'
                 gdown.download(url, output, quiet=False)
 
         channels_in = [512, 320, 128]

@@ -15,14 +15,13 @@ class nyudepthv2(BaseDataset):
 
         self.image_path_list = []
         self.depth_path_list = []
-
+        self.data_path=data_path
         if is_train:
-            txt_path += '/train_subset.txt'
+            filenames_path += '/train_subset.txt'
         else:
-            txt_path += '/test_subset.txt'
-            self.data_path = self.data_path + '/official_splits/test/'
+            filenames_path += '/test_subset.txt'
 
-        self.filenames_list = self.readTXT(txt_path)
+        self.filenames_list = self.readTXT(filenames_path)
         phase = 'train' if is_train else 'test'
         print("Dataset: NYU Depth V2")
         print("# of %s images: %d" % (phase, len(self.filenames_list)))
