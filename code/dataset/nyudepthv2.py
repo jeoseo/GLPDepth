@@ -19,9 +19,9 @@ class nyudepthv2(BaseDataset):
 
         txt_path = os.path.join(filenames_path, 'nyudepthv2')
         if is_train:
-            txt_path += '/train_list.txt'
+            txt_path += '/train_subset.txt'
         else:
-            txt_path += '/test_list.txt'
+            txt_path += '/test_subset.txt'
             self.data_path = self.data_path + '/official_splits/test/'
 
         self.filenames_list = self.readTXT(txt_path)

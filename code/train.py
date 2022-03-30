@@ -52,7 +52,7 @@ def main():
     model.to(device)
 
     # Dataset setting
-    dataset_kwargs = {'dataset_name': args.dataset, 'data_path': args.data_path}
+    dataset_kwargs = {'dataset_name': args.dataset, 'data_path': args.data_path,'filenames_path':args.filenames_path}
     if args.dataset == 'nyudepthv2':
         dataset_kwargs['crop_size'] = (224,288)
     elif args.dataset == 'kitti':
