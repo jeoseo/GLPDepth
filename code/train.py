@@ -29,7 +29,7 @@ def main():
 
     # Logging
     exp_name = '%s_%s' % (datetime.now().strftime('%m%d'), args.exp_name)
-    log_dir = os.path.join(args.log_dir, args.dataset, exp_name)
+    log_dir = os.path.join(args.log_dir) #CHANGE THIS FOR LOGGING
     logging.check_and_make_dirs(log_dir)
     writer = SummaryWriter(logdir=log_dir)
     log_txt = os.path.join(log_dir, 'logs.txt')  

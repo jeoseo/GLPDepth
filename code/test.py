@@ -34,7 +34,7 @@ def main():
         device = torch.device('cpu')
 
     if args.save_eval_pngs or args.save_visualize:
-        result_path = os.path.join(args.result_dir, args.exp_name)
+        result_path = os.path.join(args.result_dir)
         logging.check_and_make_dirs(result_path)
         print("Saving result images in to %s" % result_path)
     
