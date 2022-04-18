@@ -16,7 +16,7 @@ import utils.logging as logging
 
 from dataset.base_dataset import get_dataset
 from configs.train_options import TrainOptions
-from configs.bts_train_options import btsTrainOptions
+from configs.train_options import TrainOptions
 import time
 
 
