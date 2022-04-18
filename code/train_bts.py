@@ -62,8 +62,8 @@ def main():
     else:
         dataset_kwargs['crop_size'] = (args.crop_h, args.crop_w)
 
-    train_dataset = get_dataset(**dataset_kwargs,scale_size=(224,288))
-    val_dataset = get_dataset(**dataset_kwargs, is_train=False,scale_size=(224,288))
+    train_dataset = get_dataset(**dataset_kwargs)
+    val_dataset = get_dataset(**dataset_kwargs, is_train=False)
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size,
                                                shuffle=True, num_workers=args.workers, 
@@ -105,7 +105,7 @@ def main():
             for each_metric, each_results in results_dict.items():
                 writer.add_scalar(each_metric, each_results, epoch)
 
-    print("\n"+str(time.time()-start))
+    print("\n\n"+str(time.time()-start))
 
 
 def train(train_loader, model, criterion_d, optimizer, device, epoch, args):    
