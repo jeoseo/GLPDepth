@@ -22,7 +22,7 @@ class nyudepthv2(BaseDataset):
             filenames_path += '/train_subset.txt'
         else:
             filenames_path += '/test_subset.txt'
-            #self.data_path = self.data_path + '/official_splits/test/'
+            self.data_path = self.data_path + '/official_splits/test/'
 
 
         self.filenames_list = self.readTXT(filenames_path)
@@ -46,10 +46,10 @@ class nyudepthv2(BaseDataset):
             image = cv2.resize(image, (self.scale_size[1], self.scale_size[0]))
             depth = cv2.resize(depth, (self.scale_size[1], self.scale_size[0]))
 
-        if self.is_train:
-            image, depth = self.augment_training_data(image, depth)
-        else:
-            image, depth = self.augment_test_data(image, depth)
+        #if self.is_train:
+        #    image, depth = self.augment_training_data(image, depth)
+        #else:
+        image, depth = self.augment_test_data(image, depth)
 
         depth = depth / 1000.0  # convert in meters
 

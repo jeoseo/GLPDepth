@@ -17,12 +17,15 @@ import utils.logging as logging
 
 from dataset.base_dataset import get_dataset
 from configs.train_options import TrainOptions
+import time
+
 
 metric_name = ['d1', 'd2', 'd3', 'abs_rel', 'sq_rel', 'rmse', 'rmse_log',
                'log10', 'silog']
 
 
 def main():
+
     opt = TrainOptions()
     args = opt.initialize().parse_args()
     print(args)
@@ -54,7 +57,7 @@ def main():
     # Dataset setting
     dataset_kwargs = {'dataset_name': args.dataset, 'data_path': args.data_path,'filenames_path':args.filenames_path}
     if args.dataset == 'nyudepthv2':
-        dataset_kwargs['crop_size'] = (224,288)
+        dataset_kwargs['crop_size'] = (448, 576)
     elif args.dataset == 'kitti':
         dataset_kwargs['crop_size'] = (352, 704)
     else:
@@ -75,6 +78,8 @@ def main():
 
     global global_step
     global_step = 0
+
+    start=time.time()
 
     # Perform experiment
     for epoch in range(1, args.epochs + 1):
@@ -100,6 +105,8 @@ def main():
 
             for each_metric, each_results in results_dict.items():
                 writer.add_scalar(each_metric, each_results, epoch)
+
+    print("\n"+str(time.time()-start))
 
 
 def train(train_loader, model, criterion_d, optimizer, device, epoch, args):    
