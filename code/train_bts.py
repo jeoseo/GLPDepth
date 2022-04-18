@@ -9,14 +9,13 @@ import torch.optim as optim
 import torch.backends.cudnn as cudnn
 from tensorboardX import SummaryWriter
 
-from models.model import GLPDepth
+from models.bts import BtsModel
 import utils.metrics as metrics
 from utils.criterion import SiLogLoss
 import utils.logging as logging
 
 from dataset.base_dataset import get_dataset
-from configs.train_options import TrainOptions
-from configs.bts_train_options import btsTrainOptions
+from configs.bts_train_options import BtsTrainOptions
 import time
 
 
@@ -26,7 +25,7 @@ metric_name = ['d1', 'd2', 'd3', 'abs_rel', 'sq_rel', 'rmse', 'rmse_log',
 
 def main():
 
-    opt = TrainOptions()
+    opt = BtsTrainOptions()
     args = opt.initialize().parse_args()
     print(args)
 
@@ -43,7 +42,7 @@ def main():
     if not os.path.exists(result_dir):
         os.makedirs(result_dir)
     
-    model = GLPDepth(max_depth=args.max_depth, is_train=True)
+    model = BtsModel(args)
 
     # CPU-GPU agnostic settings
     if args.gpu_or_cpu == 'gpu':
@@ -129,11 +128,10 @@ def train(train_loader, model, criterion_d, optimizer, device, epoch, args):
 
         input_RGB = batch['image'].to(device)
         depth_gt = batch['depth'].to(device)
-
         preds = model(input_RGB)
 
         optimizer.zero_grad()
-        loss_d = criterion_d(preds['pred_d'].squeeze(), depth_gt)
+        loss_d = criterion_d(preds['pred_d'][-1].squeeze(), depth_gt)
         depth_loss.update(loss_d.item(), input_RGB.size(0))
         loss_d.backward()
 
@@ -165,10 +163,10 @@ def validate(val_loader, model, criterion_d, device, epoch, args, log_dir):
         with torch.no_grad():
             preds = model(input_RGB)
 
-        pred_d = preds['pred_d'].squeeze()
+        pred_d = preds['pred_d'][-1].squeeze()
         depth_gt = depth_gt.squeeze()
 
-        loss_d = criterion_d(preds['pred_d'].squeeze(), depth_gt)
+        loss_d = criterion_d(pred_d, depth_gt)
 
         depth_loss.update(loss_d.item(), input_RGB.size(0))
 
