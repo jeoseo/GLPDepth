@@ -58,7 +58,7 @@ def main():
         dataset_kwargs = {'data_path': args.data_path, 'dataset_name': args.dataset,'filenames_path':args.filenames_path,
                           'is_train': False}
 
-    test_dataset = get_dataset(**dataset_kwargs,scale_size=(224,288),)
+    test_dataset = get_dataset(**dataset_kwargs)
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False,
                              pin_memory=True)
 
