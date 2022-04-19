@@ -13,16 +13,16 @@ import torch.backends.cudnn as cudnn
 
 import utils.logging as logging
 import utils.metrics as metrics
-from models.bts import BtsModel
+from models.lap import LDRN
 from dataset.base_dataset import get_dataset
-from configs.bts_test_options import BtsTestOptions
+from configs.lap_test_options import LapTestOptions
 metric_name = ['d1', 'd2', 'd3', 'abs_rel', 'sq_rel', 'rmse', 'rmse_log',
                'log10', 'silog']
 
 
 def main():
     # experiments setting
-    opt = BtsTestOptions()
+    opt = LapTestOptions()
     args = opt.initialize().parse_args()
     print(args)
 
@@ -43,7 +43,7 @@ def main():
             result_metrics[metric] = 0.0
 
     print("\n1. Define Model")
-    model = BtsModel(args)
+    model = LDRN(args)
     model_weight = torch.load(args.ckpt_dir)
     if 'module' in next(iter(model_weight.items()))[0]:
         model_weight = OrderedDict((k[7:], v) for k, v in model_weight.items())
@@ -68,7 +68,7 @@ def main():
 
         with torch.no_grad():
             pred = model(input_RGB)
-        pred_d = pred['pred_d'][-1]
+        pred_d = pred['pred_d']
 
         if args.do_evaluate:
             depth_gt = batch['depth'].to(device)
@@ -94,7 +94,7 @@ def main():
             
         if args.save_visualize:
             save_path = os.path.join(result_path, filename[0])
-            pred_d_numpy = pred_d.squeeze().cpu().numpy()
+            pred_d_numpy = pred_d
             pred_d_numpy = (pred_d_numpy / pred_d_numpy.max()) * 255
             pred_d_numpy = pred_d_numpy.astype(np.uint8)
             pred_d_color = cv2.applyColorMap(pred_d_numpy, cv2.COLORMAP_RAINBOW)
