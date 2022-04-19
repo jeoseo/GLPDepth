@@ -49,6 +49,7 @@ def main():
         model_weight = OrderedDict((k[7:], v) for k, v in model_weight.items())
     model.load_state_dict(model_weight)
     model.eval()
+    model.cuda()
 
     print("\n2. Define Dataloader")
     if args.dataset == 'imagepath': # not for do_evaluate in case of imagepath
