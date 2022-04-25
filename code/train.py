@@ -57,9 +57,9 @@ def main():
     start=time.time()
 
     # Dataset setting
-    dataset_kwargs = {'dataset_name': args.dataset, 'data_path': args.data_path,'filenames_path':args.filenames_path}
+    dataset_kwargs = {'dataset_name': args.dataset, 'data_path': args.data_path,'filenames_path':args.filenames_path,'do_cutdepth':args.do_cutdepth}
     if args.dataset == 'nyudepthv2':
-        dataset_kwargs['crop_size'] = (448, 576)
+        dataset_kwargs['crop_size'] = (448-32,576-32)
     elif args.dataset == 'kitti':
         dataset_kwargs['crop_size'] = (352, 704)
     else:

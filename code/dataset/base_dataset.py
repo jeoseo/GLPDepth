@@ -37,6 +37,7 @@ class BaseDataset(Dataset):
 
     def augment_training_data(self, image, depth):
         H, W, C = image.shape
+
         if self.count % 4 == 0:
             alpha = random.random()
             beta = random.random()
@@ -68,4 +69,3 @@ class BaseDataset(Dataset):
         depth = self.to_tensor(depth).squeeze()
 
         return image, depth
-

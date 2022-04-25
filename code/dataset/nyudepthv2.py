@@ -48,8 +48,8 @@ class nyudepthv2(BaseDataset):
 
         H, W, C = image.shape
         #first, image and depth must be cropped because of the large borders on the depth map
-        image=image[int(W/10),int(W*19/20),int(W/12):int(W*11/12)]
-        depth=depth[int(W/10),int(W*19/20),int(W/12):int(W*11/12)]
+        image=image[40:460,40:600,:]
+        depth=depth[40:460,40:600]
 
         if self.is_train and self.do_cutdepth:
             image, depth = self.augment_training_data(image, depth)
