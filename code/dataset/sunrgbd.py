@@ -4,7 +4,7 @@ import cv2
 from dataset.base_dataset import BaseDataset
 
 
-class nyudepthv2(BaseDataset):
+class sunrgbd(BaseDataset):
     def __init__(self, data_path, filenames_path='./code/dataset/filenames/',
                  is_train=True, do_cutdepth=False, crop_size=(448, 576), scale_size=None):
         super().__init__(crop_size)
@@ -22,7 +22,6 @@ class nyudepthv2(BaseDataset):
             filenames_path += '/train_subset.txt'
         else:
             filenames_path += '/test_subset.txt'
-            self.data_path = self.data_path + '/official_splits/test/'
 
 
         self.filenames_list = self.readTXT(filenames_path)
@@ -36,7 +35,7 @@ class nyudepthv2(BaseDataset):
     def __getitem__(self, idx):
         img_path = self.data_path + self.filenames_list[idx].split(' ')[0]
         gt_path = self.data_path + self.filenames_list[idx].split(' ')[1]
-        filename = img_path.split('/')[-2] + '_' + img_path.split('/')[-1]
+        filename = img_path.split('/')[-1]
 
         image = cv2.imread(img_path)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -45,7 +44,6 @@ class nyudepthv2(BaseDataset):
         if self.scale_size:
             image = cv2.resize(image, (self.scale_size[1], self.scale_size[0]))
             depth = cv2.resize(depth, (self.scale_size[1], self.scale_size[0]))
-
         H, W, C = image.shape
         #first, image and depth must be cropped because of the large borders on the depth map
         image=image[int(W/10),int(W*19/20),int(W/12):int(W*11/12)]

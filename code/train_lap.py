@@ -53,6 +53,8 @@ def main():
         device = torch.device('cpu')
     model.to(device)
 
+    start=time.time()
+
     # Dataset setting
     dataset_kwargs = {'dataset_name': args.dataset, 'data_path': args.data_path,'filenames_path':args.filenames_path}
     if args.dataset == 'nyudepthv2':
@@ -78,7 +80,7 @@ def main():
     global global_step
     global_step = 0
 
-    start=time.time()
+    
 
     # Perform experiment
     for epoch in range(1, args.epochs + 1):
@@ -148,6 +150,9 @@ def validate(val_loader, model, criterion_d, device, epoch, args, log_dir):
     model.eval()
 
     if args.save_model:
+        torch.save(model.state_dict(), os.path.join(
+            log_dir, 'epoch_%02d_model.ckpt' % epoch))
+    elif args.save_last_model and epoch==args.epochs:
         torch.save(model.state_dict(), os.path.join(
             log_dir, 'epoch_%02d_model.ckpt' % epoch))
 

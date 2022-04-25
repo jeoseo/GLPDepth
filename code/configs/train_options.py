@@ -11,11 +11,13 @@ class TrainOptions(BaseOptions):
         parser.add_argument('--crop_h',  type=int, default=448)
         parser.add_argument('--crop_w',  type=int, default=576)        
         parser.add_argument('--log_dir', type=str, default='./logs')
+        parser.add_argument('--do_cutdepth',action='store_true')
 
         # logging options
         parser.add_argument('--val_freq', type=int, default=1)
         parser.add_argument('--save_freq', type=int, default=10)
-        parser.add_argument('--save_model', action='store_true')        
+        parser.add_argument('--save_model', action='store_true')    
+        parser.add_argument('--save_last_model',action='store_true')    
         parser.add_argument('--save_result', action='store_true')
 
         

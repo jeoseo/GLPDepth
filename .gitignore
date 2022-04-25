@@ -5,3 +5,4 @@ logs/
 results/
 __pycache__/
 code/dataset/filenames/nyudepthv2/
+code/dataset/weights/
