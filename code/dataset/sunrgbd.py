@@ -26,7 +26,7 @@ class sunrgbd(BaseDataset):
 
         self.filenames_list = self.readTXT(filenames_path)
         phase = 'train' if is_train else 'test'
-        print("Dataset: NYU Depth V2")
+        print("Dataset: SUNRGBD")
         print("# of %s images: %d" % (phase, len(self.filenames_list)))
 
     def __len__(self):
@@ -41,6 +41,10 @@ class sunrgbd(BaseDataset):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         depth = cv2.imread(gt_path, cv2.IMREAD_UNCHANGED).astype('float32')
 
+        #done because original image dimensions not divisible by 32
+        H, W, C = image.shape
+        image = cv2.resize(image, (W-(W %32), H-(H%32)))
+        depth = cv2.resize(depth, (W-(W %32), H-(H%32)))
         if self.scale_size:
             image = cv2.resize(image, (self.scale_size[1], self.scale_size[0]))
             depth = cv2.resize(depth, (self.scale_size[1], self.scale_size[0]))
