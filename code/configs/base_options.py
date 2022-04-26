@@ -12,7 +12,7 @@ class BaseOptions():
         parser.add_argument('--data_path',    type=str, default='/data/ssd1/')
         parser.add_argument('--filenames_path', type=str, default='/code/dataset/filenames/')
         parser.add_argument('--dataset',      type=str, default='nyudepthv2',
-                            choices=['nyudepthv2', 'kitti', 'imagepath'])
+                            choices=['nyudepthv2', 'kitti','sunrgbd', 'imagepath'])
         parser.add_argument('--exp_name',     type=str, default='test')
         parser.add_argument('--batch_size',   type=int, default=12)
         parser.add_argument('--workers',      type=int, default=8)
