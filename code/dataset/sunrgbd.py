@@ -53,6 +53,6 @@ class sunrgbd(BaseDataset):
         else:
             image, depth = self.augment_test_data(image, depth)
 
-        depth = depth / 1000.0  # convert in meters
+        depth = depth / 10000.0  # convert in meters
 
         return {'image': image, 'depth': depth, 'filename': filename}
